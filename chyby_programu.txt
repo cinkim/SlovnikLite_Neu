@@ -1,0 +1,84 @@
+"-------------FUNKCE NOVINKY------------------"
+N0001 - Z ini souboru není načtená adresa webu [DEFAULT][web_novinky_aktualizace]
+
+
+"-------------FUNKCE AKTUALIZACE--------------"
+A0001 - Z ini souboru není načtená adresa webu [DEFAULT][web_novinky_aktualizace]
+
+
+"--------------FUNKCE UPGRADE------------------"
+U0001 - Žádné, nebo příliš pomalé internetové připojení.
+
+
+"--------------SlovnikLite.py-------------------"
+P0001 - Není nainstalovaný emailový klient.
+
+P0002 - Pro výsledky studenta nutno navolit jazyk, učebnici.
+
+P0003 - Pro spoštění testování je nutné zvolit lekci.
+
+P0004 - Nutno zvolit učebnici k exportu.
+
+P0005 - Pro vypsání slovíček je nutné zvolit lekci.
+
+P0006 - Nutno zvolit lekci k exportu.
+
+P0007 - Pro načtení studia je nutné zvolit studenta.
+
+P0008 - Klikl na prázdné místo pole pro učebnice. Nutno přidat učebnici.
+
+P0009 - Nepodporovaný typ souboru pro import slovíček. Pouze soubory csv/ txt/ xls
+
+
+"--------------ini_nastaveni.py--------------"
+P0010 - V ini souboru není řádek [DEFAULT][aktualizace]
+
+P0011 - Kritická chyba - chybí konfigurační soubor setup.ini
+
+
+"---------------new_student.py-----------------"
+P0012 - Překročení počtu uživatelů
+
+P0013 - při zadání nového studenta chybí Jméno
+
+P0014 - jméno studenta již existuje
+
+P0015 - Nutno zvolit alespoň jeden studijní jazyk
+
+
+"----------------pridat_lek.py---------------"
+P0016 - Při zadání nové lekce zvolili již použité číslo lekce
+
+P0017 - Nutno vyplnit číslo a název nové lekce
+
+P0018 - Chybně zadané číslo lekce. Nutno zadat celočíselný formát bez mezer
+
+P0019 - Nutno kliknout na učebnici pro uložení lekce
+
+
+"---------------pridat_sl.py-----------------"
+P0020 - Nutno vybrat jazyk/ učebnici/ lekci
+
+P0021 - Nejsou vybrány všechny požadované informace. Nutno vybrat jazyk/ učebnici/ lekci. (Asi nenastane)
+
+P0022 - Vyplnit obě políčka slovíček.
+
+
+"---------------pridat_uc.py----------------"
+P0023 - Název učebnice již existuje. Vyberte jiný název.
+
+P0024 - Vyplň název užebnice.
+
+
+"----------------testovani.py----------------"
+P0025 - Vybrat lekci k testování.
+
+P0026 - Chyba nastavení. Odkazuje se do db na předvolbu překladu CZ/Cizí - Cizí/Cz - Mix (asi nenastane)
+
+P0027 - Příliš nízké hodnoty nastavení studenta pro testování zvolené lekce.
+
+
+"--------------vypsat_sl.py-----------------"
+P0028 - Není internetové připojení
+
+P0029 - Není načtena IP adresa z ini souboru. [DEFAULT][ip]
