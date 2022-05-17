@@ -1,9 +1,9 @@
 "-------------FUNKCE NOVINKY------------------"
-N0001 - Z ini souboru není načtená adresa webu [DEFAULT][web_novinky_aktualizace]
+N0001 - Z ini souboru není načtená adresa webu [DEFAULT][web_novinky_aktualizace] = https://pyladiesplzen.wz.cz/SlovnikLite/
 
 
 "-------------FUNKCE AKTUALIZACE--------------"
-A0001 - Z ini souboru není načtená adresa webu [DEFAULT][web_novinky_aktualizace]
+A0001 - Z ini souboru není načtená adresa webu [DEFAULT][web_novinky_aktualizace] = https://pyladiesplzen.wz.cz/SlovnikLite/
 
 
 "--------------FUNKCE UPGRADE------------------"
@@ -31,7 +31,7 @@ P0009 - Nepodporovaný typ souboru pro import slovíček. Pouze soubory csv/ txt
 
 
 "--------------ini_nastaveni.py--------------"
-P0010 - V ini souboru není řádek [DEFAULT][aktualizace]
+P0010 - V ini souboru není v položce [DEFAULT] řádek  aktualizace = 22.5
 
 P0011 - Kritická chyba - chybí konfigurační soubor setup.ini
 
@@ -81,4 +81,4 @@ P0027 - Příliš nízké hodnoty nastavení studenta pro testování zvolené l
 "--------------vypsat_sl.py-----------------"
 P0028 - Není internetové připojení
 
-P0029 - Není načtena IP adresa z ini souboru. [DEFAULT][ip]
+P0029 - Není načtena IP adresa z ini souboru. [DEFAULT][ip] = http://www.seznam.cz
