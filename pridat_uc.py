@@ -37,12 +37,12 @@ def nova_ucebnice(self):
 def ulozit_novou_ucebnici(self):
     seznam = db.seznam_vsech_ucebnic()
     if self.nova_uc.get() in seznam:
-        tk.messagebox.showwarning("???", "Učebnice již existuje\npoužijte jiné pojmenování, postačí přidat za název jakýkoliv znak\nnapř: číslovku, přezdívku....")
+        tk.messagebox.showwarning("Error_P0023", "Učebnice již existuje\npoužijte jiné pojmenování, postačí přidat za název jakýkoliv znak\nnapř: číslovku, přezdívku....")
         return
     if messagebox.askyesno("Uložit???", "Uložit učebnici?") == True:
         while True:
             if self.nova_uc.get() == "":
-                tk.messagebox.showwarning("ERROR", "Zadej název učebnice.")
+                tk.messagebox.showwarning("Error_P0024", "Zadej název učebnice.")
                 return
             else:
                 db.uloz_ucebnici(self.akt_j,self.nova_uc.get())

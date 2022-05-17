@@ -13,7 +13,7 @@ def new_words(self):
                 jaz = self.akt_j + ":  " + self.akt_ucebnice
                 lek = "Lekce: " + self.akt_Lekce
         except AttributeError:
-                tk.messagebox.showwarning("ERROR", "Nejsou vybrané všechny parametry.")
+                tk.messagebox.showwarning("Error_P0021", "Nejsou vybrané všechny parametry.")
                 return
         self.nadpis = tk.Label(self.words, text=pozor, font="Ariel 14", bg="grey")
         self.nadpis.grid(row=1, columnspan=3, sticky=W+E)
@@ -82,13 +82,13 @@ def nacti_lekci(self):
                 self.akt_Lekce = str(self.tree_Lekce.item(self.tree_Lekce.focus())["values"][1])
                 new_words(self)
         except IndexError:
-                tk.messagebox.showwarning("ERROR", "Nejdříve vyber jazyk/učebnici/lekci.")
+                tk.messagebox.showwarning("Error_P0020", "Nejdříve vyber jazyk/učebnici/lekci.")
                 return
         except tkinter.TclError:
-                tk.messagebox.showwarning("ERROR", "Nejdříve vyber jazyk/učebnici/lekci.")
+                tk.messagebox.showwarning("Error_P0020", "Nejdříve vyber jazyk/učebnici/lekci.")
                 return
         except AttributeError:
-                tk.messagebox.showwarning("ERROR", "Nejdříve vyber jazyk/učebnici/lekci.")
+                tk.messagebox.showwarning("Error_P0020", "Nejdříve vyber jazyk/učebnici/lekci.")
                 return
 
 
@@ -96,10 +96,10 @@ def dalsi(self):
         self.slovnik.nova_sl.reverse()
         self.s = []
         if self.w2.get() == "":
-            tk.messagebox.showwarning("ERROR", "Vyplň slovíčka pro uložení.")
+            tk.messagebox.showwarning("Error_P0022", "Vyplň slovíčka pro uložení.")
             return
         elif self.w1.get() == "":
-            tk.messagebox.showwarning("ERROR", "Vyplň slovíčka pro uložení.")
+            tk.messagebox.showwarning("Error_P0022", "Vyplň slovíčka pro uložení.")
             return
         else:
             self.s.append(self.w1.get())

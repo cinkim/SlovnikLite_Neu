@@ -106,7 +106,7 @@ def precti(slovicko, jazyk, rychlost, aj, de, fr, it, es, ru):
             tts.save(nazev_souboru + '.mp3')
             os.startfile(nazev_souboru + ".mp3")
     else:
-        tk.messagebox.showwarning("ERROR", "Není k dispozici internetové přípojení") 
+        tk.messagebox.showwarning("Error_P0028", "Není k dispozici internetové přípojení") 
 
 
 
@@ -117,7 +117,7 @@ def internet_on():
         urlopen(ip, timeout=2)
         return True
     except FileNotFoundError:
-        tk.messagebox.showwarning("ERROR", "Nenalezen soubor s ověřovací IP adresou.")
+        tk.messagebox.showwarning("Error_P0029", "Nenalezen soubor s ověřovací IP adresou.")
     except:
         return False
 

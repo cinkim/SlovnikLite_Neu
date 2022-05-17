@@ -63,16 +63,16 @@ def vytvor_top_okno_novy_student(self):
 
 def ulozit_noveho_studenta(self):
     if len(self.slovnik.seznam_studentu) == 3:
-        tk.messagebox.showwarning("ERROR", "V této verzi již další student nejde uložit\nnutno zakoupit verzi SlovnikPRO")
+        tk.messagebox.showwarning("Error_P0012", "V této verzi již další student nejde uložit\nnutno zakoupit verzi SlovnikPRO")
         return
     else:
         vystup = []
         new = self.new_st.get()
         if new == "":
-            tk.messagebox.showwarning("ERROR", "Zadej jméno studenta.")
+            tk.messagebox.showwarning("Error_P0013", "Zadej jméno studenta.")
             return
         if new in self.slovnik.seznam_studentu:
-            tk.messagebox.showwarning("ERROR", "Uživatel již existuje\nzvolte jiné jméno.")
+            tk.messagebox.showwarning("Error_P0014", "Uživatel již existuje\nzvolte jiné jméno.")
             return
         Aj = self.var_Aj.get()
         Nj = self.var_Nj.get()
@@ -81,7 +81,7 @@ def ulozit_noveho_studenta(self):
         It = self.var_It.get()
         Ru = self.var_Ru.get()
         if Aj+Nj+Fr+Es+It+Ru == 0:
-            tk.messagebox.showwarning("ERROR", "Zvolte alespoň jeden studijní jazyk.")
+            tk.messagebox.showwarning("Error_P0015", "Zvolte alespoň jeden studijní jazyk.")
             return
         vystup.append(new)
         if Aj == 1:

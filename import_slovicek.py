@@ -20,7 +20,7 @@ def import_sl(self):
             seznam_slov = pd.read_csv(file_path, delimiter='/', usecols=(0,1))
     
     except ValueError:
-        tk.messagebox.showwarning("ERROR", "Nepodporovaný typ souboru\naplikace podporuje pouze soubory typu\ncsv, txt, xls")
+        tk.messagebox.showwarning("Error_P0009", "Nepodporovaný typ souboru\naplikace podporuje pouze soubory typu\ncsv, txt, xls")
         return
     except FileNotFoundError:
         return

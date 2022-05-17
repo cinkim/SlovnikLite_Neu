@@ -48,12 +48,12 @@ def ulozit_Lek(self):
     seznam_l = db.seznam_lekci(self.akt_ucebnice)
     for qq in seznam_l:
         if (id_l in str(qq[0])) or (nazev == qq[1]):
-            tk.messagebox.showwarning("ERROR", "Číslo lekce, nebo název již existuje.")
+            tk.messagebox.showwarning("Error_P0016", "Číslo lekce, nebo název již existuje.")
             return
     if messagebox.askyesno("Uložit???", "Přidat lekci?") == True:
         while True:
             if (self.nova_lek.get() or self.nova_lek_cislo.get()) == "":
-                tk.messagebox.showwarning("ERROR", "Vyplňte číslo a název lekce")
+                tk.messagebox.showwarning("Error_P0017", "Vyplňte číslo a název lekce")
                 return
             try:
                 # print(self.akt_j, self.akt_ucebnice, self.nova_lek.get(), int(self.nova_lek_cislo.get()))
@@ -64,11 +64,11 @@ def ulozit_Lek(self):
                 self.nl.set("") 
                 return       
             except ValueError:
-                tk.messagebox.showwarning("ERROR", "Zadej správně číslo lekce.")
+                tk.messagebox.showwarning("Error_P0018", "Zadej správně číslo lekce.")
                 return
 
             except TypeError:
-                tk.messagebox.showwarning("ERROR", "Klikni na učebnici, kam se budou ukládat lekce.")
+                tk.messagebox.showwarning("Error_P0019", "Klikni na učebnici, kam se budou ukládat lekce.")
                 return
     else:
         pass

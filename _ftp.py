@@ -1,5 +1,5 @@
 
-from subprocess import TimeoutExpired
+
 from getmac import get_mac_address as gma
 from ftplib import FTP
 import ini_nastaveni
@@ -34,9 +34,9 @@ def pripojeni_ftp_a_stazeni_zaznamu(uzivatel, out):
 
     with open("docasny.txt", "rb") as pridat:
         ftp = FTP(ini_nastaveni.ftpHost(), timeout=out)     # connect to host, default port
-        ftp.login(ini_nastaveni.ftpName(),'Touskov33033')  # user anonymous, passwd anonymous@
+        ftp.login(ini_nastaveni.ftpName(),'Touskov33033')  # user , passwd 
         ftp.encoding = "utf-8"
-        ftp.cwd('SlovnikLite')          # change into "debian" directory
+        ftp.cwd('SlovnikLite')          # change into "SlovnikLite" directory
         ftp.storbinary('APPE uzivatele.txt', pridat, 1)
         ftp.close()
 

@@ -98,7 +98,7 @@ def nacti(self):
         self.akt_Lekce = str(self.tree_Lekce.item(self.tree_Lekce.focus())["values"][1])
         
     except IndexError:
-        tk.messagebox.showwarning("ERROR", "Nejdříve vyber lekci.")
+        tk.messagebox.showwarning("Error_P0025", "Nejdříve vyber lekci.")
         return
 
     if self.slovnik.typ_prekladu == 1:
@@ -108,7 +108,7 @@ def nacti(self):
     elif self.slovnik.typ_prekladu == 3:
         v3(self)
     else:
-        tk.messagebox.showwarning("ERROR", "Chyba v nastavení.")
+        tk.messagebox.showwarning("Error_P0026", "Chyba v nastavení.")
         return
 
     
@@ -130,7 +130,7 @@ def v1(self): # cz/cizí
     self.slovnik.netestuj = []
     self.slovnik.testuj = self.slovnik.testuj
     if self.slovnik.testuj == []:
-        tk.messagebox.showwarning("ERROR", "S tímto nastavením již není co testovat\nzměňte nastavení studenta, nebo zvolte jinou lekci.")
+        tk.messagebox.showwarning("Error_P0027", "S tímto nastavením již není co testovat\nzměňte nastavení studenta, nebo zvolte jinou lekci.")
         return
     else:
         self.slovnik.testuj = self.slovnik.testuj * self.slovnik.pocet_kol_testu
@@ -171,7 +171,7 @@ def v2(self): # cizí/cz
     self.slovnik.netestuj = []
     self.slovnik.testuj = self.slovnik.testuj
     if self.slovnik.testuj == []:
-        tk.messagebox.showwarning("ERROR", "S tímto nastavením již není co testovat\nzměňte nastavení studenta, nebo zvolte jinou lekci.")
+        tk.messagebox.showwarning("Error_P0027", "S tímto nastavením již není co testovat\nzměňte nastavení studenta, nebo zvolte jinou lekci.")
         return
     else:
         self.slovnik.testuj = self.slovnik.testuj * self.slovnik.pocet_kol_testu
@@ -228,7 +228,7 @@ def v3(self): # mix
     self.slovnik.netestuj = []
     self.slovnik.testuj = self.slovnik.testuj
     if self.slovnik.testuj == []:
-        tk.messagebox.showwarning("ERROR", "S tímto nastavením již není co testovat\nzměňte nastavení studenta, nebo zvolte jinou lekci.")
+        tk.messagebox.showwarning("Error_P0027", "S tímto nastavením již není co testovat\nzměňte nastavení studenta, nebo zvolte jinou lekci.")
         return
     else:
         self.slovnik.testuj = self.slovnik.testuj * self.slovnik.pocet_kol_testu
@@ -513,3 +513,10 @@ def ulozit_test(self, vysledky):
                 return
         except FileNotFoundError:
             os.mkdir("Vysledky")
+            with open(cesta, mode="w", encoding="utf-8") as soubor:
+                for ii in self.slovnik.vysledky:
+                    ii = str(ii)
+                    ii = ii.replace("[", "")
+                    ii = ii.replace("]", "")
+                    print(ii, file=soubor)
+                return

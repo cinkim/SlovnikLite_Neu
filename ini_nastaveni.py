@@ -4,9 +4,10 @@ from tkinter import messagebox
 
 def nacteni_ini():   
     try:
-        cesta_ini = ".setup.ini"
+        cesta_ini = "setup.ini"
         return cesta_ini
     except FileNotFoundError:
+        
         return ""
 
 def aktual():
@@ -17,9 +18,13 @@ def aktual():
 
     try:    
         config.read(cesta_ini)
-        return config["DEFAULT"]["aktualizace"]
+        cislo_verze = config["DEFAULT"]["aktualizace"]
+        if cislo_verze == "" or cislo_verze =="NONE":
+            return "???" 
+        else:
+            return cislo_verze
     except:
-        messagebox.showwarning("Error", "Nebyla nalezena hodnota verze.")
+        messagebox.showwarning("Error_P0010", "Nebyla nalezena hodnota verze.")
         return "???"
 
 def vyslovnost_aj():
@@ -141,6 +146,10 @@ def out():
         else:
             return out
     except:
+        messagebox.showwarning("Error_P0011", """Nebyl nalezen konfigurační soubor.
+                                        \nněkteré části programu mohou způsobit neočekávanou chybu
+                                        \ndoporučujeme program nepoužívat a kontaktovat vývojáře na adrese
+                                        \npetr.f@pyladiesplzen.wz.cz""")
         return float(2)
 
 def ftpHost():

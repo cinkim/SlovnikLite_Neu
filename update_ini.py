@@ -18,7 +18,7 @@ WORKING_FOLDERS = [DOWN_ZIP, EXTRAKT_ZIP, TEMP]
 
 def adresa_webu():
     config = configparser.ConfigParser()
-    cesta_ini = ".setup.ini"
+    cesta_ini = "setup.ini"
     try:    
         config.read(cesta_ini)
         return config["DEFAULT"]["http://pyladiesplzen.wz.cz/SlovnikLite/"]
@@ -143,7 +143,7 @@ def smaz():
                 pass
             elif soubor.endswith("update.exe"):
                 pass
-            elif soubor.endswith(".setup.ini"):
+            elif soubor.endswith("setup.ini"):
                 pass
             elif soubor.endswith(".txt"):
                 pass
@@ -210,9 +210,9 @@ def zapis(cesta_webu):
         return
 
     config = configparser.ConfigParser() # vytvoření instance
-    config.read(".setup.ini")  # načtení souboru
+    config.read("setup.ini")  # načtení souboru
     config['DEFAULT']['aktualizace'] = verze_na_webu   # update položky
-    with open(".setup.ini", 'w') as configfile:    # save
+    with open("setup.ini", 'w') as configfile:    # save
         config.write(configfile)
 
 

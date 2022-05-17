@@ -7,7 +7,6 @@ import tkinter.messagebox
 from tkinter import messagebox
 
 import os
-from multiprocessing import Pool
 import win32com.client as win32
 
 import webbrowser
@@ -79,18 +78,18 @@ class slovnik:
     """__________Uklidit______________"""
     def uklidit(self):
         """
-        Smaže update soubory.
+        Smaže update soubory po aktualizaci probramu.
         """
 
         try:
-            os.remove("update.exe") 
+            os.remove("update.exe")     # smaže update soubor pro starou verzi
         except FileNotFoundError:
             pass
         except PermissionError:
             pass
 
         try:
-            os.remove("update_ini.exe")
+            os.remove("update_ini.exe")     # smaže update soubor pro .ini verzi
         except FileNotFoundError:
             pass
         except PermissionError:
@@ -107,87 +106,78 @@ class slovnik:
         """
 
         try:
-            url = ini_nastaveni.URL() + "novinky.txt"
+            url = ini_nastaveni.URL() + "novinky.txt"   # načte cestu z ini
             if url == "novinky.txt":
                 return
         except:
-            tk.messagebox.showwarning("Error", "Soubor s webovou adresou nenalezen.")
+            tk.messagebox.showwarning("Error_N0001", "Soubor s webovou adresou nenalezen.\nObraťte se na vývojáře.")
             return
 
 
-        # try:
         target_url = url
-        response = requests.get(target_url, timeout=self.out)
-        response.encoding = "utf-8"
-        data = str(response.text)
-        novinky_stazene = data.replace("\r", "").strip()
-        novinky_stazene = novinky_stazene.replace("\ufeff", "")
-        """
-        except:
-            tk.messagebox.showwarning("Error", "Nebylo navázané spojení se serverem novinek.")
-            return
-        """
+        response = requests.get(target_url, timeout=self.out)   # načtení novinky
+        response.encoding = "utf-8"     # nastavení kódování
+        data = str(response.text)       # uložení
+        novinky_stazene = data.replace("\r", "").strip() # ošetření znaků stažené novinky
+        novinky_stazene = novinky_stazene.replace("\ufeff", "") # ošetření znaků stažené novinky
+        novinky_ulozene = ini_nastaveni.novinky_ulozene_ini()   # načtení uložené novinky
 
-        novinky_ulozene = ini_nastaveni.novinky_ulozene_ini()
-
-        if novinky_stazene == "":
+        if novinky_stazene == "":   # když na webu prázdný soubor s informací - nedělej nic
             return
-        elif novinky_stazene == "\ufeff":
+        elif novinky_stazene == "\ufeff":   # když na webu "\ufeff" - nedělej nic
             return
-        elif novinky_ulozene == "???":
-            return
-        elif novinky_stazene == novinky_ulozene:
+        elif novinky_stazene == novinky_ulozene:    # když na webu stejné s uloženou - nedělej nic
             return
         else:
-            tk.messagebox.showwarning("Oznámení", novinky_stazene)
-            ini_nastaveni.ulozit_novinku(novinky_stazene)
+            tk.messagebox.showwarning("Oznámení", novinky_stazene)  # zobrazení informace
+            ini_nastaveni.ulozit_novinku(novinky_stazene)   # uložení informace do ini
 
 
 
     """___________________Aktualizace___________________"""
     def aktualizace(self):
         try:
-            url = ini_nastaveni.URL() + "aktualizace.txt"
+            url = ini_nastaveni.URL() + "aktualizace.txt"   # načte cestu z ini
             if url == "aktualizace.txt":
                 return
         except:
-            tk.messagebox.showwarning("Error", "Soubor s webovou adresou nenalezen.")
+            tk.messagebox.showwarning("Error_A0001", "Soubor s webovou adresou nenalezen.\nObraťte se na vývojáře.")
             return
 
-        # try:
         target_url = url
-        response = requests.get(target_url, timeout=self.out)
-        data = str(response.text)
-        data = data.replace("\r", "")
-        """
-        except:
-            tk.messagebox.showwarning("Error", "Nebylo navázané spojení se serverem aktualizací.")
-            return
-        """
+        response = requests.get(target_url, timeout=self.out)   # načtení verze aktualizace
+        data = str(response.text)                               # uložení
+        data = data.replace("\r", "")                           # ošetření znaků stažené novinky
 
-        if float(data) == float(self.cislo_verze):
+        if self.cislo_verze == "???":
+                return
+
+        if float(data) == float(self.cislo_verze):  # v případě shody verzí - nic
             pass
-        else:
-            if float(data) > float(self.cislo_verze):
+        else:         
+            if float(data) > float(self.cislo_verze):   # v případě vyšší verze - zeptá se na aktualizaci
                 if messagebox.askyesno("Nalezena nová verze programu.", "Byla nalezena nová verze programu\nchtete spustit aktualizaci?") == True:
-                    self.upgrade()
+                    self.upgrade()  # stažení aktualizačního souboru
                     time.sleep(1)
-                    os.startfile("update_ini.exe")
+                    os.startfile("update_ini.exe")  # spuštění aktualizačního souboru
                     time.sleep(1)
-                    os._exit(0)
+                    os._exit(0)     # ukončení Slovníku
                 else:
-                    pass
+                    pass     # odmítnutá aktualizace
+
             elif float(data) < float(self.cislo_verze):
                 tk.messagebox.showwarning("???", "Nejde aktualizovat na nižší verzi programu.")
 
     def upgrade(self):
-
+        """
+        Stažení a rozbalení aktualizačního souboru
+        """
         DOWN_ZIP = "./.DownloadZip/"
         EXTRAKT_ZIP = "./.ExtraktZip/"
 
         WORKING_FOLDERS = [DOWN_ZIP, EXTRAKT_ZIP]
 
-        for folder in WORKING_FOLDERS:
+        for folder in WORKING_FOLDERS:  # příprava adresářové struktury pro rozbalení aktualizace
             if not os.path.exists(folder):
                 os.makedirs(folder)
 
@@ -197,7 +187,7 @@ class slovnik:
             r = requests.get(url, allow_redirects=True, timeout=self.out)
             open(DOWN_ZIP + "update_ini.zip", 'wb').write(r.content)
         except:
-            tk.messagebox.showwarning("ERROR", "Nebylo navázené spojení se serverem.\nNa stránkách vývojářů v sekci 'Kontakt' požádejte o možné řešení.")
+            tk.messagebox.showwarning("Error_U0001", "Nebylo navázené spojení se serverem.\nNa stránkách vývojářů v sekci 'Kontakt' požádejte o možné řešení.")
             return
 
         with zipfile.ZipFile(DOWN_ZIP + '/' + "update_ini.zip", 'r') as zip_ref:
@@ -408,7 +398,7 @@ class slovnikGUI(tk.Frame):
     def aktualizuj(self):
         self.slovnik.upgrade()
         time.sleep(1)
-        os.startfile("update.exe")
+        os.startfile("update_ini.exe")
         time.sleep(1)
         os._exit(0)
 
@@ -424,7 +414,7 @@ class slovnikGUI(tk.Frame):
             mail.Display(False)
             return
         except:
-            tk.messagebox.showwarning("Error", """Je nutné mít nainstalovanou aplikaci MS Outlook\npokud aplikaci nechcete instalovat, 
+            tk.messagebox.showwarning("Error_P0001", """Je nutné mít nainstalovanou aplikaci MS Outlook\npokud aplikaci nechcete instalovat, 
                                         kontaktujte nás na adrese\nhttps://pyladiesplzen.wz.cz/Kontakt/""")
 
 
@@ -465,11 +455,11 @@ class slovnikGUI(tk.Frame):
             data = prace_s_db.nacti_vysledky(self.akt_student, self.akt_ucebnice)
             vys.vypis_vysledky(self, data)
         except AttributeError:
-            tk.messagebox.showwarning("ERROR", "Vyber jazyk a učebnici.")
+            tk.messagebox.showwarning("Error_P0002", "Vyber jazyk, učebnici.")
         except IndexError:
-            tk.messagebox.showwarning("ERROR", "Vyber učebnici.")
+            tk.messagebox.showwarning("Error_P0002", "Vyber jazyk, učebnici.")
         except TypeError:
-            tk.messagebox.showwarning("ERROR", "Vyber učebnici.")
+            tk.messagebox.showwarning("Error_P0002", "Vyber jazyk, učebnici.")
         return
     
 
@@ -480,8 +470,8 @@ class slovnikGUI(tk.Frame):
         try:
             ts.tes(self)
         except IndexError:
-            tk.messagebox.showwarning("ERROR", "Nejdříve vyber lekci.")
-        return
+            tk.messagebox.showwarning("Error_P003", "Nejdříve vyber lekci.")
+            return
 
    
     def Testuj(self): # spustí se po kliknutí na tlačítko Testuj
@@ -495,7 +485,7 @@ class slovnikGUI(tk.Frame):
                 ts.nacti(self)
                 ts.spust_test(self)
             elif self.slovnik.aktualni_slovo == len(self.slovnik.testuj):
-                if tk.messagebox.askyesno("???", "Testovat znovu?") == True:
+                if tk.messagebox.askyesno("Nová volba", "Testovat znovu?") == True:
                     self.slovnik.k_testovani = []
                     self.slovnik.testuj = []
                     self.slovnik.netestuj = []
@@ -558,7 +548,7 @@ class slovnikGUI(tk.Frame):
         try:
             prace_s_db.export_ucebnice(self.slovnik.akt_U, self.slovnik.akt_jazyk)
         except AttributeError:
-            tk.messagebox.showwarning("ERROR", "Vyber učebnici k exportu.")
+            tk.messagebox.showwarning("Error_P0004", "Vyber učebnici k exportu.")
             return
 
             
@@ -617,7 +607,7 @@ class slovnikGUI(tk.Frame):
             v_sl.vypis_slovicka(self,prace_s_db.slovicka_lekce(self.akt_Lekce, self.akt_student))
             #print(prace_s_db.nastaveni_studenta(self.akt_student))
         except IndexError:
-            tk.messagebox.showwarning("ERROR", "Vyber lekci.")
+            tk.messagebox.showwarning("Error_P0005", "Vyber lekci.")
 
 
     """_________________________Export lekce__________________________________"""
@@ -627,7 +617,7 @@ class slovnikGUI(tk.Frame):
             self.akt_Lekce = str(self.tree_Lekce.item(self.tree_Lekce.focus())["values"][1])
             prace_s_db.export_lekce(self.akt_Lekce, self.akt_jazyk, "Export_Lekce")
         except IndexError:
-            tk.messagebox.showwarning("ERROR", "Vyber lekci.")
+            tk.messagebox.showwarning("Error_P0006", "Vyber lekci.")
 
 
     """_____________________________ new_student.py ______________________________________________________________"""
@@ -665,7 +655,7 @@ class slovnikGUI(tk.Frame):
             self.ucebnice.destroy()
             # self.Lekce.destroy()
         except IndexError:
-            tk.messagebox.showwarning("ERROR", "Vyber studenta.")
+            tk.messagebox.showwarning("Error_P0007", "Vyber studenta.")
             return
         except AttributeError:
             pass
@@ -726,7 +716,7 @@ class slovnikGUI(tk.Frame):
                 self.akt_ucebnice = self.seznam_ucebnic[self.ucebnice_ListBox.curselection()[0]]
                 self.slovnik.akt_U = self.akt_ucebnice
         except IndexError:
-            tk.messagebox.showwarning("ERROR", "Vyber, nebo založ novou učebnici.")
+            tk.messagebox.showwarning("Error_P0008", "Založ novou učebnici.")
             self.akt_ucebnice = ""
             return
         self.create_widgets_Lekce()
