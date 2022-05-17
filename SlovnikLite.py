@@ -172,7 +172,7 @@ class slovnik:
                 if messagebox.askyesno("Nalezena nová verze programu.", "Byla nalezena nová verze programu\nchtete spustit aktualizaci?") == True:
                     self.upgrade()
                     time.sleep(1)
-                    os.startfile("update.exe")
+                    os.startfile("update_ini.exe")
                     time.sleep(1)
                     os._exit(0)
                 else:
@@ -670,8 +670,10 @@ class slovnikGUI(tk.Frame):
         except AttributeError:
             pass
 
-
-        _ftp.prog(self.akt_student)
+        try:
+            _ftp.prog(self.akt_student)
+        except:
+            pass
 
             
         self.jazyky_studenta = prace_s_db.jazyky_studenta(self.akt_student)
