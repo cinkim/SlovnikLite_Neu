@@ -34,6 +34,7 @@ class slovnik:
     def __init__(self):
         
         self.out = ini_nastaveni.out()
+        self.internet_on = ini_nastaveni.pripojeni()
         self.cislo_verze = ini_nastaveni.aktual()
         self.uklidit()
         self.seznam_studentu = [] # vrácený seznam studentů z db
@@ -102,7 +103,7 @@ class slovnik:
         porovná s již uloženou informací v .ini souboru,
         v případě shody informaci ignoruje, v případě rozdílu
         zobrazí informaci a aktualizuje zprávu v .ini souboru.
-        Ignoruje prázdný soubor s žádnou zprávou.
+        Ignoruje prázdný soubor s žádnou zprávou na webu.
         """
 
         try:
@@ -218,15 +219,18 @@ class slovnikGUI(tk.Frame):
         self.slovnik = slovnik
         self.parent.title(self.slovnik.cislo_verze)
         self.parent.protocol("WM_DELETE_WINDOW", self.on_close)
-        self.create_widgets_uzivatele()       
-        try:
-            self.slovnik.aktualizace()
-            self.slovnik.novinky()
-        except requests.exceptions.ConnectionError:
-            tk.messagebox.showwarning("Error", "Nebylo navázané spojení se serverem.")
-                  
-        self.zobraz()
-        self.akt_ucebnice = ""
+        self.create_widgets_uzivatele()
+        if slovnik.internet_on == "OF":
+            tk.messagebox.showwarning("Error_P0000", "Nebylo navázané spojení se serverem.")
+        else:
+            try:
+                self.slovnik.aktualizace()
+                self.slovnik.novinky()
+            except requests.exceptions.ConnectionError:
+                tk.messagebox.showwarning("Error", "Nebylo navázané spojení se serverem.")
+
+            self.zobraz()
+            self.akt_ucebnice = ""
 
     
 

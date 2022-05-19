@@ -1,16 +1,11 @@
-from socket import timeout
-from time import time
+
+
 import tkinter as tk
 from tkinter import ttk, StringVar, NORMAL, CENTER, N, S, E, W, NO
 import ini_nastaveni
 import os
-# import pyttsx3
-# import pyttsx3.drivers
-# from pyttsx3 import voice
+import configparser
 
-# import platform
-
-# from pyttsx3.drivers import sapi5
 
 from gtts import gTTS
 
@@ -66,60 +61,67 @@ def precti(slovicko, jazyk, rychlost, aj, de, fr, it, es, ru):
     # engine = pyttsx3.init("sapi5")
 
     if internet_on() == True:
-        if rychlost == 0:
-            rych = False
-        else:
-            rych = True
-        if jazyk == "Aj":  # upravit podmínku podle názvu jazykového balíčku
-            tts = gTTS(slovicko, lang='en', tld=aj, slow=rych)
-            nazev_souboru = zamen_znak(slovicko)
-            tts.save(nazev_souboru + '.mp3')
-            os.startfile(nazev_souboru + ".mp3")
+        try:
+            if rychlost == 0:
+                rych = False
+            else:
+                rych = True
+            if jazyk == "Aj":  # upravit podmínku podle názvu jazykového balíčku
+                tts = gTTS(slovicko, lang='en', tld=aj, slow=rych)
+                nazev_souboru = zamen_znak(slovicko)
+                tts.save(nazev_souboru + '.mp3')
+                os.startfile(nazev_souboru + ".mp3")
 
-        elif jazyk == "Nj":  # upravit podmínku podle názvu jazykového balíčku
-            tts = gTTS(slovicko, lang='de',tld=de, slow=rych)
-            nazev_souboru = zamen_znak(slovicko)
-            tts.save(nazev_souboru + '.mp3')
-            os.startfile(nazev_souboru + ".mp3")
+            elif jazyk == "Nj":  # upravit podmínku podle názvu jazykového balíčku
+                tts = gTTS(slovicko, lang='de',tld=de, slow=rych)
+                nazev_souboru = zamen_znak(slovicko)
+                tts.save(nazev_souboru + '.mp3')
+                os.startfile(nazev_souboru + ".mp3")
 
-        elif jazyk == "Ru":    # upravit podmínku podle názvu jazykového balíčku
-            tts = gTTS(slovicko, lang='ru', tld=ru, slow=rych)
-            nazev_souboru = zamen_znak(slovicko)
-            tts.save(nazev_souboru + '.mp3')
-            os.startfile(nazev_souboru + ".mp3")
+            elif jazyk == "Ru":    # upravit podmínku podle názvu jazykového balíčku
+                tts = gTTS(slovicko, lang='ru', tld=ru, slow=rych)
+                nazev_souboru = zamen_znak(slovicko)
+                tts.save(nazev_souboru + '.mp3')
+                os.startfile(nazev_souboru + ".mp3")
 
-        elif jazyk == "Fr":  # upravit podmínku podle názvu jazykového balíčku
-            tts = gTTS(slovicko, lang='fr', tld=fr, slow=rych)
-            nazev_souboru = zamen_znak(slovicko)
-            tts.save(nazev_souboru + '.mp3')
-            os.startfile(nazev_souboru + ".mp3")
+            elif jazyk == "Fr":  # upravit podmínku podle názvu jazykového balíčku
+                tts = gTTS(slovicko, lang='fr', tld=fr, slow=rych)
+                nazev_souboru = zamen_znak(slovicko)
+                tts.save(nazev_souboru + '.mp3')
+                os.startfile(nazev_souboru + ".mp3")
 
-        elif jazyk == "Es":    # upravit podmínku podle názvu jazykového balíčku
-            tts = gTTS(slovicko, lang='es', tld=es, slow=rych)
-            nazev_souboru = zamen_znak(slovicko)
-            tts.save(nazev_souboru + '.mp3')
-            os.startfile(nazev_souboru + ".mp3")
+            elif jazyk == "Es":    # upravit podmínku podle názvu jazykového balíčku
+                tts = gTTS(slovicko, lang='es', tld=es, slow=rych)
+                nazev_souboru = zamen_znak(slovicko)
+                tts.save(nazev_souboru + '.mp3')
+                os.startfile(nazev_souboru + ".mp3")
 
-        elif jazyk == "It":   # upravit podmínku podle názvu jazykového balíčku
-            tts = gTTS(slovicko, lang='it', tld=it, slow=rych)
-            nazev_souboru = zamen_znak(slovicko)
-            tts.save(nazev_souboru + '.mp3')
-            os.startfile(nazev_souboru + ".mp3")
-    else:
-        tk.messagebox.showwarning("Error_P0028", "Není k dispozici internetové přípojení") 
-
+            elif jazyk == "It":   # upravit podmínku podle názvu jazykového balíčku
+                tts = gTTS(slovicko, lang='it', tld=it, slow=rych)
+                nazev_souboru = zamen_znak(slovicko)
+                tts.save(nazev_souboru + '.mp3')
+                os.startfile(nazev_souboru + ".mp3")
+        except:
+            tk.messagebox.showwarning("Error_P0028", "Blokován přístup na Googl služby.")
 
 
 
 def internet_on():
-    try:
-        ip = ini_nastaveni.overeni_IP()
-        urlopen(ip, timeout=2)
-        return True
-    except FileNotFoundError:
-        tk.messagebox.showwarning("Error_P0029", "Nenalezen soubor s ověřovací IP adresou.")
-    except:
-        return False
+    config = configparser.ConfigParser()
+    cesta_ini = ini_nastaveni.nacteni_ini()
+    config.read(cesta_ini)
+
+    if config["DEFAULT"]["pripojeni"] == "OF":
+        return
+    else:
+        try:
+            ip = ini_nastaveni.overeni_IP()
+            urlopen(ip, timeout=2)
+            return True
+        except FileNotFoundError:
+            tk.messagebox.showwarning("Error_P0029", "Nenalezen soubor s ověřovací IP adresou.")
+        except:
+            return False
 
 def zamen_znak(nazev_souboru):
     nazev_souboru = nazev_souboru.replace("?", "")

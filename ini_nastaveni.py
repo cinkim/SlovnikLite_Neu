@@ -1,5 +1,6 @@
 import configparser
 from tkinter import messagebox
+from ftplib import FTP
 
 
 def nacteni_ini():   
@@ -169,7 +170,6 @@ def ulozeni_uzivatele_do_ini(uzivatel):
     config = configparser.ConfigParser()
     cesta_ini = nacteni_ini()
     config.read(cesta_ini)
-    config["DEFAULT"]["mac_"]
     if config["DEFAULT"]["mac_"] == uzivatel:
         pass
     else:
@@ -183,3 +183,19 @@ def _MAC():
     cesta_ini = nacteni_ini()
     config.read(cesta_ini)
     return config["DEFAULT"]["mac_"]
+
+def pripojeni():
+    config = configparser.ConfigParser()
+    cesta_ini = nacteni_ini()
+    config.read(cesta_ini)
+    try:
+        ftp = FTP(ftpHost(), timeout=2)  # connect to host, default port
+        ftp.login(ftpName(), 'Touskov33033')  # user , passwd
+        ftp.close()
+        config["DEFAULT"]["pripojeni"] = "ON"
+        with open(cesta_ini, 'w') as configfile:  # save
+            config.write(configfile)
+    except:
+        config["DEFAULT"]["pripojeni"] = "OF"
+        with open(cesta_ini, 'w') as configfile:  # save
+            config.write(configfile)
