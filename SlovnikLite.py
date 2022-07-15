@@ -751,6 +751,7 @@ class slovnikGUI(tk.Frame):
     
 if __name__ == '__main__':
     root = tk.Tk()
+    my_menu = tk.Menu(root)
     slovnik = slovnik()
     app = slovnikGUI(root, slovnik)
     app.mainloop()

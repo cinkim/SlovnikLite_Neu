@@ -246,7 +246,7 @@ extract_data_file("SlovnikLite.zip", DOWN_ZIP, EXTRAKT_ZIP) # rozbalí aktualiza
 vytvor_zalohu(TEMP) # vytvoří zálohu starých souborů
 smaz() # smaže staré soubory
 nakopiruj_nove() # Nakopíruje nové rozbalené soubory
-zapis(adresa_serveru) # Zapíše do souboru aktuální číslo verze
+# zapis(adresa_serveru) # Zapíše do souboru aktuální číslo verze
 print("Aktualizace byla provedena. Spouštím program SlovnikLite.")
 os.startfile("SlovnikLite.exe") # spustí SlovnikLite
 time.sleep(2) # čeká 2 sekundy

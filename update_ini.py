@@ -21,7 +21,7 @@ def adresa_webu():
     cesta_ini = "setup.ini"
     try:    
         config.read(cesta_ini)
-        return config["DEFAULT"]["http://pyladiesplzen.wz.cz/SlovnikLite/"]
+        return config["DEFAULT"]["web_novinky_aktualizace"]
     except:
         return "???"
 
@@ -44,20 +44,6 @@ def vytvor_adresare(folders):
         os.startfile("SlovnikLite.exe")
         os._exit(0)
 
-
-def nacti_adresu(cesta):
-    try:
-        with open(cesta, mode="r", encoding="utf-8") as cesta:
-            cesta = cesta.read()
-        cesta = cesta.strip()
-        return cesta
-    except FileNotFoundError:
-        input("""ERROR 1001:\n
-                Nebyl nalezen soubor s cestou na server aktualizací.\n
-                Na stránkách vývojářů v sekci 'Kontakt' požádejte o možné řešení.\n
-                Stisknutím klávesy 'Enter' aktualizaci ukončíte.""")
-        os.startfile("SlovnikLite.exe")
-        os._exit(0) 
         
 
 def stahni_soubor(cesta_webu, DOWN_ZIP):
@@ -136,7 +122,6 @@ def smaz():
         soubory_py = glob.glob(os.path.join("*.py"))
         soubory = glob.glob(os.path.join("*.*"))
         for soubor in soubory:
-            time.sleep(2)
             if soubor in soubory_py:
                 pass
             elif soubor.endswith(".sqlite"):
